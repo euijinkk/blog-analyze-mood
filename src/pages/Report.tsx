@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,8 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Copy, ExternalLink, Share2 } from "lucide-react";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { BlogAnalysis } from "@/types/report";
+import { cn } from "@/lib/utils";
 
 const Report = () => {
   const location = useLocation();
@@ -27,11 +27,8 @@ const Report = () => {
     
     setBlogUrl(url);
     
-    // Simulate API call to fetch analysis
     const fetchAnalysis = async () => {
       try {
-        // In a real implementation, you would call your API here
-        // For now, use mock data
         setTimeout(() => {
           setAnalysis(getMockAnalysisData());
           setLoading(false);
@@ -168,7 +165,6 @@ const Report = () => {
           </div>
         </div>
 
-        {/* Main Report Card */}
         <Card className="mb-8 overflow-hidden border-0 shadow-lg">
           <div className="bg-gradient-to-r from-purple-700 to-indigo-600 p-6 md:p-10 text-white">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">블로그 성향 분석 결과</h1>
@@ -189,9 +185,7 @@ const Report = () => {
           </div>
         </Card>
 
-        {/* Report Grid */}
         <div className="report-grid mb-8">
-          {/* MBTI Section */}
           <Card className="content-card">
             <CardHeader>
               <CardTitle className="text-2xl">MBTI 성격 유형</CardTitle>
@@ -242,7 +236,6 @@ const Report = () => {
             </CardContent>
           </Card>
 
-          {/* Content Ratio Section */}
           <Card className="content-card">
             <CardHeader>
               <CardTitle className="text-2xl">콘텐츠 비율 분석</CardTitle>
@@ -254,7 +247,12 @@ const Report = () => {
                     <span>전문분야</span>
                     <span className="font-medium">{analysis.content_ratio.expertise}</span>
                   </div>
-                  <Progress value={getContentRatioPercentage(analysis.content_ratio.expertise)} className="h-3 bg-gray-200" indicatorClassName="bg-purple-600" />
+                  <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-purple-600 rounded-full" 
+                      style={{ width: `${getContentRatioPercentage(analysis.content_ratio.expertise)}%` }} 
+                    />
+                  </div>
                 </div>
                 
                 <div>
@@ -262,7 +260,12 @@ const Report = () => {
                     <span>에세이</span>
                     <span className="font-medium">{analysis.content_ratio.essay}</span>
                   </div>
-                  <Progress value={getContentRatioPercentage(analysis.content_ratio.essay)} className="h-3 bg-gray-200" indicatorClassName="bg-indigo-500" />
+                  <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-indigo-500 rounded-full" 
+                      style={{ width: `${getContentRatioPercentage(analysis.content_ratio.essay)}%` }} 
+                    />
+                  </div>
                 </div>
                 
                 <div>
@@ -270,7 +273,12 @@ const Report = () => {
                     <span>여행</span>
                     <span className="font-medium">{analysis.content_ratio.travel}</span>
                   </div>
-                  <Progress value={getContentRatioPercentage(analysis.content_ratio.travel)} className="h-3 bg-gray-200" indicatorClassName="bg-blue-500" />
+                  <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-blue-500 rounded-full" 
+                      style={{ width: `${getContentRatioPercentage(analysis.content_ratio.travel)}%` }} 
+                    />
+                  </div>
                 </div>
                 
                 <div>
@@ -278,7 +286,12 @@ const Report = () => {
                     <span>자기계발</span>
                     <span className="font-medium">{analysis.content_ratio.self_improvement}</span>
                   </div>
-                  <Progress value={getContentRatioPercentage(analysis.content_ratio.self_improvement)} className="h-3 bg-gray-200" indicatorClassName="bg-purple-400" />
+                  <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-purple-400 rounded-full" 
+                      style={{ width: `${getContentRatioPercentage(analysis.content_ratio.self_improvement)}%` }} 
+                    />
+                  </div>
                 </div>
               </div>
               
@@ -290,7 +303,6 @@ const Report = () => {
             </CardContent>
           </Card>
 
-          {/* Keywords Section */}
           <Card className="content-card">
             <CardHeader>
               <CardTitle className="text-2xl">핵심 키워드</CardTitle>
@@ -309,7 +321,6 @@ const Report = () => {
             </CardContent>
           </Card>
 
-          {/* Notable Quotes Section */}
           <Card className="content-card">
             <CardHeader>
               <CardTitle className="text-2xl">인상적인 문장</CardTitle>
@@ -340,7 +351,6 @@ const Report = () => {
           </Card>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button onClick={() => navigate("/")} className="bg-gradient-to-r from-purple-700 to-indigo-600">
             다른 블로그 분석하기
